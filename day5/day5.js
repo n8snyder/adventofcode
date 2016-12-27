@@ -8,25 +8,26 @@ function niceStringCount(list){
     var count = 0;
     for (var i = 0; i<list.length; i++){
         var text = list[i];
-        var foundVowels = {};
+        var vowelCount = 0;
         var prev = undefined;
         var doubleLetter = false;
         var isNaughty = false;
         for (var j = 0; j<text.length; j++){
             if (vowels.includes(text[j])){
-                foundVowels[text[j]] = true;
+                vowelCount++;
             }
-            else if (text[j] == prev){
+            if (text[j] == prev){
                 doubleLetter = true;
             }
-            else if (naughtyStrings.includes(prev + text[j])){
+            if (naughtyStrings.includes(prev + text[j])){
                 isNaughty = true;
             }
+            prev = text[j];
         }
         if (isNaughty){
             continue;
         }
-        else if (doubleLetter || Object.keys(foundVowels).length >= 3){
+        else if (doubleLetter && vowelCount >= 3){
             count++;
         }
     }
